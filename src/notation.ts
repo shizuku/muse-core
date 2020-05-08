@@ -1,19 +1,21 @@
-import * as svg from './svg';
-import { Page } from "./page";
-import { Dimens } from "./interface";
+import * as svg from './svg.js';
+import { Page } from "./page.js";
+import { Dimens } from "./interface.js";
 
-export class Notation{
+export class Notation {
     private pages: Page[];
     private dimens: Dimens;
+
     private element: SVGGElement;
 
     constructor(json: string) {
+        this.pages = new Array<Page>();
         let o = JSON.parse(json);
         this.dimens = o.dimens;
-        o.pages.forEach((ele) => {
-            this.pages.push(new Page(JSON.stringify(ele))
+        o.pages.forEach((ele: any) => {
+            this.pages.push(new Page(JSON.stringify(ele)));
         });
-        this.pages
+
         this.element = svg.svg('muse-notation');
         this.pages.forEach((ele) => {
             this.element.appendChild(ele.draw());

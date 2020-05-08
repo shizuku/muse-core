@@ -1,13 +1,20 @@
-import * as svg from './svg';
-import { Line } from './line';
-import { Dimens } from './interface';
+import * as svg from './svg.js';
+import { Line } from './line.js';
+import { Dimens } from './interface.js';
 
-export class Page{
+export class Page {
     private lines: Line[];
     private dimens: Dimens;
+
     private element: SVGGElement;
 
     constructor(json: string) {
+        this.lines = new Array<Line>();
+        let o = JSON.parse(json);
+        this.dimens = o.dimens;
+        o.lines.forEach((ele: any) => {
+            this.lines.push(new Line(JSON.stringify(ele)));
+        });
         this.element = svg.svg('muse-page');
         this.lines.forEach((ele) => {
             this.element.appendChild(ele.draw());

@@ -1,0 +1,13 @@
+{
+    "include": [
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        "lib/**/*.ts",
+        "node_modules"
+    ],
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "target": "es2016"
+    }
+}

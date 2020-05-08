@@ -1,6 +1,6 @@
-import * as svg from './svg';
+import * as svg from '../src/svg';
 
-export interface Point{
+export interface Point {
     x: number;
     y: number;
 }
@@ -40,12 +40,12 @@ function drawNote(note, position): SVGElement {
     let u = 0;
     let d = dimens.note_font_size;
     let w = 0;
-    return { u:u, d:d, w:w, r:r };
+    return { u: u, d: d, w: w, r: r };
 }
 function group_group(notes) {
     let r = [];
     let n = notes.length;
-    r = [{s:0,e:n-1}];
+    r = [{ s: 0, e: n - 1 }];
 
     return r;
 }
@@ -64,9 +64,9 @@ function group_position(notes, group, width) {
     });*/
 
     let n = notes.length;
-    let w = width/(n+1);
-    for (let i =0; i<n; ++i) {
-        r.push((i+1)*w);
+    let w = width / (n + 1);
+    for (let i = 0; i < n; ++i) {
+        r.push((i + 1) * w);
     }
     return r;
 }
@@ -74,49 +74,49 @@ function group_line(notes, group) {
     let l = [];
     let maxh = 0;
     notes.forEach((ele) => {
-        maxh = (ele.l>maxh?ele.l:maxh);
+        maxh = (ele.l > maxh ? ele.l : maxh);
     });
     group.forEach((g) => {
         let h = [];
-        for (let k = 0; k<maxh; ++k) {
+        for (let k = 0; k < maxh; ++k) {
             h.push(-1);
         }
         if (g.e > g.s) {
-            for (let i = g.s; i<g.e; ++i) {
-                for (let j = 0; j<notes[i].l; ++j) {
+            for (let i = g.s; i < g.e; ++i) {
+                for (let j = 0; j < notes[i].l; ++j) {
                     if (h[j] < 0) {
                         h[j] = i;
                     }
                 }
-                if (notes[i].l > notes[i+1].l) {
-                    for (let j = notes[i+1].l; j<notes[i].l; ++j) {
-                        l.push({y:j,s:h[j],e:i});
+                if (notes[i].l > notes[i + 1].l) {
+                    for (let j = notes[i + 1].l; j < notes[i].l; ++j) {
+                        l.push({ y: j, s: h[j], e: i });
                         h[j] = -1;
                     }
                 }
-                if (notes[i].l < notes[i+1].l) {
-                    for (let j = 0; j<notes[i+1].l; ++j) {
+                if (notes[i].l < notes[i + 1].l) {
+                    for (let j = 0; j < notes[i + 1].l; ++j) {
                         if (h[j] < 0) {
-                            h[j] = i+1;
+                            h[j] = i + 1;
                         }
                     }
                 }
             }
             h.forEach((ele, idx) => {
                 if (ele >= 0) {
-                    l.push({y:idx,s:ele,e:g.e});
+                    l.push({ y: idx, s: ele, e: g.e });
                 }
             });
         } else if (g.e == g.s) {
-            for(let i = 0; i<notes[g.e].l; ++i){
-                l.push({y:i,s:g.s,e:g.e});
+            for (let i = 0; i < notes[g.e].l; ++i) {
+                l.push({ y: i, s: g.s, e: g.e });
             }
         }
     });
     return l;
 }
 function group(bar, width) {
-    let r = {g:[],p:[],l:[],};
+    let r = { g: [], p: [], l: [], };
     r.g = group_group(bar.notes);
     r.p = group_position(bar.notes, r.g, width);
     r.l = group_line(bar.notes, r.g);
@@ -148,9 +148,9 @@ function drawTrack(track, position, width): SVGElement {
         let n = drawBar(ele, { x: i * w, y: 0 }, w);
         r.appendChild(n);
     });
-    for (let i = 0;i<track.bars.length + 1;++i){
-        r.appendChild(line(i*w, -dimens.bar_line_margin_top,
-            i*w, dimens.bar_line_length + dimens.bar_line_margin_bottom));
+    for (let i = 0; i < track.bars.length + 1; ++i) {
+        r.appendChild(line(i * w, -dimens.bar_line_margin_top,
+            i * w, dimens.bar_line_length + dimens.bar_line_margin_bottom));
     }
     return r;
 }
@@ -161,7 +161,7 @@ function drawLine(_line, position): SVGElement {
     _line.tracks.forEach((ele, i) => {
         r.appendChild(drawTrack(ele, { x: 0, y: i * dimens.track_height }, dimens.page_width));
     });
-    r.appendChild(line(-10,0,-10,20));
+    r.appendChild(line(-10, 0, -10, 20));
     return r;
 }
 function drawPage(page, position): SVGElement {

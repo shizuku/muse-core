@@ -1,13 +1,20 @@
-import * as svg from './svg';
-import { Bar } from './bar';
-import { Dimens } from './interface';
+import * as svg from './svg.js';
+import { Bar } from './bar.js';
+import { Dimens } from './interface.js';
 
-export class Track{
+export class Track {
     private bars: Bar[];
     private dimens: Dimens;
+
     private element: SVGGElement;
 
     constructor(json: string) {
+        this.bars = new Array<Bar>();
+        let o = JSON.parse(json);
+        this.dimens = o.dimens;
+        o.bars.forEach((ele: any) => {
+            this.bars.push(new Bar(JSON.stringify(ele)));
+        });
         this.element = svg.svg('muse-track');
         this.bars.forEach((ele) => {
             this.element.appendChild(ele.draw());

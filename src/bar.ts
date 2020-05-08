@@ -1,13 +1,20 @@
-import * as svg from './svg';
-import { Note } from "./note";
-import { Dimens } from "./interface";
+import * as svg from './svg.js';
+import { Note } from "./note.js";
+import { Dimens } from "./interface.js";
 
-export class Bar{
+export class Bar {
     private notes: Note[];
     private dimens: Dimens;
+
     private element: SVGGElement;
 
     constructor(json: string) {
+        this.notes = new Array<Note>();
+        let o = JSON.parse(json);
+        this.dimens = o.dimens;
+        o.notes.forEach((ele: any) => {
+            this.notes.push(new Note(JSON.stringify(ele)));
+        });
         this.element = svg.svg('muse-bar');
         this.notes.forEach((ele) => {
             this.element.appendChild(ele.draw());

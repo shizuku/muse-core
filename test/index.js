@@ -1,5 +1,8 @@
-import { drawMuse } from '../dist/muse.js'
-let s = `{
+import {
+    Muse
+} from '../dist/muse.js';
+
+let x = {
     "title": "classsssssssssssssss",
     "pages": [{
         "lines":[{
@@ -109,7 +112,8 @@ let s = `{
             }],
         },]
     }]
-}`;
-const n = JSON.parse(s);
+};
+let s = JSON.stringify(x);
+const n = new Muse(s);
 const p = document.querySelector('#paper');
-drawMuse(n, p);
+p.appendChild(n.draw());
