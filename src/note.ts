@@ -17,6 +17,12 @@ export class Note {
         this.dimens = o.dimens;
 
         this.element = svg.svg('muse-note');
+        //this.attach();
+    }
+    protected attach() {
+        this.element.setAttribute('width', (this.dimens.width + this.dimens.margin_left + this.dimens.margin_right).toString());
+        this.element.setAttribute('height', (this.dimens.height + this.dimens.margin_top + this.dimens.margin_bottom).toString());
+        this.element.setAttribute('transform', `translate(${this.dimens.x},${this.dimens.y})`);
     }
     public settle(): Dimens {
         return this.dimens;
