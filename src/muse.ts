@@ -20,7 +20,10 @@ export class Muse {
     public setttle() {
 
     }
-    public draw(): SVGSVGElement {
+    protected draw() {
+
+    }
+    public svg(): SVGSVGElement {
         return this.element;
     }
 };
