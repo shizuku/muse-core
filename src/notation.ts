@@ -1,14 +1,13 @@
 import * as svg from './svg.js';
 import { Page } from "./page.js";
 import { Dimens } from "./interface.js";
+import { element } from './element.js';
 
-export class Notation {
+export class Notation extends element {
     private pages: Page[];
-    private dimens: Dimens;
-
-    private element: SVGGElement;
 
     constructor(json: string) {
+        super(json);
         this.pages = new Array<Page>();
         let o = JSON.parse(json);
         this.dimens = o.dimens;
@@ -16,21 +15,24 @@ export class Notation {
             this.pages.push(new Page(JSON.stringify(ele)));
         });
 
-        this.element = svg.svg('muse-notation');
-        this.pages.forEach((ele) => {
-            this.element.appendChild(ele.draw());
-        });
+        this.element = svg.g('muse-notation');
         this.attach();
+        this.draw();
     }
-    protected attach() {
-        this.element.setAttribute('width', (this.dimens.width + this.dimens.margin_left + this.dimens.margin_right).toString());
-        this.element.setAttribute('height', (this.dimens.height + this.dimens.margin_top + this.dimens.margin_bottom).toString());
-        this.element.setAttribute('transform', `translate(${this.dimens.x},${this.dimens.y})`);
+    protected draw() {
+        this.pages.forEach((ele) => {
+            this.element.appendChild(ele.svg());
+        });
     }
     public settle(): Dimens {
         return this.dimens;
     }
-    public draw(): SVGGElement {
-        return this.element;
+    public obj(): Object {
+        const r = { pages: <any>[], dimens: {} };
+        this.pages.forEach((elm) => {
+            r.pages.push(elm.obj());
+        })
+        r.dimens = this.dimens;
+        return r;
     }
 };
