@@ -23,7 +23,10 @@ export class Line extends element {
             this.element.appendChild(ele.svg());
         });
     }
-    public settle(): Dimens {
+    public settle(pdimens: Dimens, position: number): Dimens {
+        this.tracks.forEach((elm, idx) => {
+            elm.settle(this.dimens, idx);
+        })
         return this.dimens;
     }
     public obj(): Object {

@@ -8,7 +8,10 @@ req.send();
 req.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
         const n = new Muse(this.responseText);
+        n.setttle();
         const p = document.querySelector('#paper');
         p.appendChild(n.svg());
+        const t = document.querySelector('#text');
+        t.innerText = n.stringify();
     }
 }

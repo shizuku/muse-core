@@ -23,7 +23,7 @@ export class Bar extends element {
             this.element.appendChild(ele.svg());
         });
     }
-    public settle(): Dimens {
+    public settle(pdimens: Dimens, position: number): Dimens {
         this.notes.forEach((elm, idx) => {
             elm.settle(this.dimens, idx);
         });

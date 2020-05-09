@@ -23,7 +23,10 @@ export class Track extends element {
             this.element.appendChild(ele.svg());
         });
     }
-    public settle(): Dimens {
+    public settle(pdimens: Dimens, position: number): Dimens {
+        this.bars.forEach((elm, idx) => {
+            elm.settle(this.dimens, idx);
+        })
         return this.dimens;
     }
     public obj(): Object {

@@ -2,6 +2,7 @@ import * as svg from './svg.js';
 import { Page } from "./page.js";
 import { Dimens } from "./interface.js";
 import { element } from './element.js';
+import * as res from './resource.js';
 
 export class Notation extends element {
     private pages: Page[];
@@ -20,11 +21,18 @@ export class Notation extends element {
         this.draw();
     }
     protected draw() {
+        this.element.innerHTML = "";
         this.pages.forEach((ele) => {
             this.element.appendChild(ele.svg());
         });
     }
-    public settle(): Dimens {
+    public settle(pdimens: Dimens, position: number): Dimens {
+        this.dimens.width = pdimens.width;
+        this.dimens.height = pdimens.height;
+        this.pages.forEach((elm, idx) => {
+            elm.settle(this.dimens, idx);
+        });
+        this.attach();
         return this.dimens;
     }
     public obj(): Object {

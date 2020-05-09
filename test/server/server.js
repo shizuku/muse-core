@@ -11,6 +11,7 @@ http.createServer(function (req, res) {
         if (err) {
             return console.error(err);
         }
+        console.log("response");
         res.end(JSON.stringify(JSON.parse(data.toString())));
     });
 }).listen(8888);
