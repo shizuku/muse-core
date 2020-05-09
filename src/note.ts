@@ -14,10 +14,27 @@ export class Note {
         this.p = o.p;
         this.pa = o.pa;
         this.l = o.l;
-        this.dimens = o.dimens;
+        this.dimens = {
+            x: 0,
+            y: 0,
+            width: 0,
+            height: 0,
+            margin_left: 0,
+            margin_right: 0,
+            margin_top: 0,
+            margin_bottom: 0,
+        };
 
         this.element = svg.svg('muse-note');
-        //this.attach();
+        this.attach();
+    }
+    public stringify(): string {
+        return JSON.stringify({
+            p:this.p,
+            pa:this.pa,
+            l:this.l,
+            dimens:this.dimens,
+        });
     }
     protected attach() {
         this.element.setAttribute('width', (this.dimens.width + this.dimens.margin_left + this.dimens.margin_right).toString());
