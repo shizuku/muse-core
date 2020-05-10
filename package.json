@@ -1,7 +1,7 @@
 {
-  "name": "muse.js",
-  "version": "1.0.0",
-  "description": "",
+  "name": "muse-core",
+  "version": "0.1.0",
+  "description": "Show music score on web page.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
