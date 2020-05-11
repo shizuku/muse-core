@@ -13,6 +13,7 @@ export class Muse extends element {
     }
     protected draw() {
         this.element.appendChild(this.notation.svg());
+        
         const t = svg.text(this.title, this.title_font_size);
         t.setAttribute('text-anchor', 'middle');
         const w = this.dimens.width + this.dimens.margin_left + this.dimens.margin_right;
@@ -26,6 +27,7 @@ export class Muse extends element {
     public toObject(): Object {
         return {
             title: this.title,
+            title_font_size: this.title_font_size,
             notation: this.notation,
             dimens: this.dimens,
         };

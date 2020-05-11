@@ -36,15 +36,5 @@ export class Note extends element {
         this.pa = o.pa;
         this.l = o.l;
         this.dimens = o.dimens;
-        this.dimens = {
-            x: 0,
-            y: 0,
-            width: 0,
-            height: 0,
-            margin_left: 0,
-            margin_right: 0,
-            margin_top: 0,
-            margin_bottom: 0,
-        };
     }
 };

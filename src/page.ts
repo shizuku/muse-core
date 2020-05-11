@@ -1,3 +1,4 @@
+import * as svg from './svg.js';
 import { Line } from './line.js';
 import { Dimens } from './interface.js';
 import { element } from './element.js';
@@ -10,6 +11,13 @@ export class Page extends element {
         super(json, 'g', 'muse-page');
     }
     protected draw() {
+        const rect = svg.rect(this.dimens.width + this.dimens.margin_left + this.dimens.margin_right,
+            this.dimens.height + this.dimens.margin_top + this.dimens.margin_bottom, 'white');
+        rect.setAttribute('transform', `translate(${this.dimens.x - this.dimens.margin_left},${this.dimens.y - this.dimens.margin_top})`);
+        rect.setAttribute('stroke-width', `1px`);
+        rect.setAttribute('stroke', `gray`);
+        this.element.appendChild(rect);
+        
         this.lines.forEach((ele) => {
             this.element.appendChild(ele.svg());
         });
