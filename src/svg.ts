@@ -5,6 +5,13 @@ export function circle(r: number, fill: string = 'black'): SVGCircleElement {
     re.setAttribute('fill', fill);
     return re;
 };
+export function rect(width: number, height: number, fill: string = 'black'): SVGRectElement {
+    const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    r.setAttribute('width', width.toString());
+    r.setAttribute('height', height.toString());
+    r.setAttribute('fill', fill);
+    return r;
+}
 export function line(x1: number, y1: number, x2: number, y2: number): SVGLineElement {
     const r = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     r.setAttribute('x1', x1.toString());
