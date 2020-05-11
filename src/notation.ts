@@ -8,17 +8,7 @@ export class Notation extends element {
     private pages: Page[];
 
     constructor(json: string) {
-        super(json);
-        this.pages = new Array<Page>();
-        let o = JSON.parse(json);
-        this.dimens = o.dimens;
-        o.pages.forEach((ele: any) => {
-            this.pages.push(new Page(JSON.stringify(ele)));
-        });
-
-        this.element = svg.g('muse-notation');
-        this.attach();
-        this.draw();
+        super(json, 'g', 'muse-notation');
     }
     protected draw() {
         this.element.innerHTML = "";
@@ -35,12 +25,19 @@ export class Notation extends element {
         this.attach();
         return this.dimens;
     }
-    public obj(): Object {
+    public toObject(): Object {
         const r = { pages: <any>[], dimens: {} };
         this.pages.forEach((elm) => {
-            r.pages.push(elm.obj());
-        })
+            r.pages.push(elm.toObject());
+        });
         r.dimens = this.dimens;
         return r;
+    }
+    public fromObject(o: any) {
+        this.pages = new Array<Page>();
+        this.dimens = o.dimens;
+        o.pages.forEach((ele: any) => {
+            this.pages.push(new Page(JSON.stringify(ele)));
+        });
     }
 };

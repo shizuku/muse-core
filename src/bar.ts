@@ -1,4 +1,3 @@
-import * as svg from './svg.js';
 import { Note } from "./note.js";
 import { Dimens } from "./interface.js";
 import { element } from './element.js';
@@ -7,16 +6,7 @@ export class Bar extends element {
     private notes: Note[];
 
     constructor(json: string) {
-        super(json);
-        this.notes = new Array<Note>();
-        let o = JSON.parse(json);
-        this.dimens = o.dimens;
-        o.notes.forEach((ele: any) => {
-            this.notes.push(new Note(JSON.stringify(ele)));
-        });
-        this.element = svg.g('muse-bar');
-        this.attach();
-        this.draw();
+        super(json, 'g', 'muse-bar');
     }
     protected draw() {
         this.notes.forEach((ele) => {
@@ -29,12 +19,19 @@ export class Bar extends element {
         });
         return this.dimens;
     }
-    public obj(): Object {
+    public toObject(): Object {
         const r = { notes: <any>[], dimens: {} };
         this.notes.forEach((elm) => {
-            r.notes.push(elm.obj());
+            r.notes.push(elm.toObject());
         })
         r.dimens = this.dimens;
         return r;
+    }
+    public fromObject(o: any) {
+        this.notes = new Array<Note>();
+        this.dimens = o.dimens;
+        o.notes.forEach((ele: any) => {
+            this.notes.push(new Note(JSON.stringify(ele)));
+        });
     }
 };

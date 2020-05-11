@@ -10,8 +10,27 @@ export class Note extends element {
     private l: number;
 
     constructor(json: string) {
-        super(json);
-        let o = JSON.parse(json);
+        super(json, 'g', 'muse-note');
+    }
+    protected draw() {
+        let n = this.num.toString();
+        let t = svg.text(n, res.dimens.note_font_size);
+        this.element.appendChild(t);
+    }
+    public settle(bar_dimens: Dimens, position: number): Dimens {
+
+        return this.dimens;
+    }
+    public toObject(): Object {
+        return {
+            num: this.num,
+            p: this.p,
+            pa: this.pa,
+            l: this.l,
+            dimens: this.dimens,
+        };
+    }
+    public fromObject(o: any) {
         this.num = o.num;
         this.p = o.p;
         this.pa = o.pa;
@@ -26,28 +45,6 @@ export class Note extends element {
             margin_right: 0,
             margin_top: 0,
             margin_bottom: 0,
-        };
-
-        this.element = svg.g('muse-note');
-        this.attach();
-        this.draw();
-    }
-    protected draw() {
-        let n = this.num.toString();
-        let t = svg.text(n, res.dimens.note_font_size);
-        this.element.appendChild(t);
-    }
-    public settle(bar_dimens: Dimens, position: number): Dimens {
-
-        return this.dimens;
-    }
-    public obj(): Object {
-        return {
-            num: this.num,
-            p: this.p,
-            pa: this.pa,
-            l: this.l,
-            dimens: this.dimens,
         };
     }
 };

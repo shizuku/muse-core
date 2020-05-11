@@ -1,4 +1,3 @@
-import * as svg from './svg.js';
 import { Line } from './line.js';
 import { Dimens } from './interface.js';
 import { element } from './element.js';
@@ -8,17 +7,7 @@ export class Page extends element {
     private lines: Line[];
 
     constructor(json: string) {
-        super(json);
-        this.lines = new Array<Line>();
-        let o = JSON.parse(json);
-        this.dimens = o.dimens;
-        o.lines.forEach((ele: any) => {
-            this.lines.push(new Line(JSON.stringify(ele)));
-        });
-
-        this.element = svg.g('muse-page');
-        this.attach();
-        this.draw();
+        super(json, 'g', 'muse-page');
     }
     protected draw() {
         this.lines.forEach((ele) => {
@@ -38,12 +27,20 @@ export class Page extends element {
         });
         return this.dimens;
     }
-    public obj(): Object {
+    public toObject(): Object {
         const r = { lines: <any>[], dimens: {} };
         this.lines.forEach((elm) => {
-            r.lines.push(elm.obj());
+            r.lines.push(elm.toObject());
         })
         r.dimens = this.dimens;
         return r;
+    }
+    public fromObject(o: any) {
+        this.lines = new Array<Line>();
+        this.dimens = o.dimens;
+        o.lines.forEach((ele: any) => {
+            this.lines.push(new Line(JSON.stringify(ele)));
+        });
+
     }
 };

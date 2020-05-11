@@ -1,4 +1,3 @@
-import * as svg from './svg.js';
 import { Track } from './track.js';
 import { Dimens } from './interface.js';
 import { element } from './element.js';
@@ -7,16 +6,7 @@ export class Line extends element {
     private tracks: Track[];
 
     constructor(json: string) {
-        super(json);
-        this.tracks = new Array<Track>();
-        let o = JSON.parse(json);
-        this.dimens = o.dimens;
-        o.tracks.forEach((ele: any) => {
-            this.tracks.push(new Track(JSON.stringify(ele)));
-        });
-        this.element = svg.g('muse-line');
-        this.attach();
-        this.draw();
+        super(json, 'g', 'muse-line');
     }
     protected draw() {
         this.tracks.forEach((ele) => {
@@ -29,12 +19,19 @@ export class Line extends element {
         })
         return this.dimens;
     }
-    public obj(): Object {
+    public toObject(): Object {
         const r = { tracks: <any>[], dimens: {} };
         this.tracks.forEach((elm) => {
-            r.tracks.push(elm.obj());
+            r.tracks.push(elm.toObject());
         })
         r.dimens = this.dimens;
         return r;
+    }
+    public fromObject(o: any) {
+        this.tracks = new Array<Track>();
+        this.dimens = o.dimens;
+        o.tracks.forEach((ele: any) => {
+            this.tracks.push(new Track(JSON.stringify(ele)));
+        });
     }
 };
