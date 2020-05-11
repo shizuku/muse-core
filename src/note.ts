@@ -13,11 +13,28 @@ export class Note extends element {
         super(json, 'g', 'muse-note');
     }
     protected draw() {
+        const rect = svg.rect(this.dimens.width + this.dimens.margin_left + this.dimens.margin_right,
+            this.dimens.height + this.dimens.margin_top + this.dimens.margin_bottom, 'white');
+        rect.setAttribute('transform', `translate(${-this.dimens.margin_left},${-this.dimens.margin_top})`);
+        rect.setAttribute('stroke-width', `1px`);
+        rect.setAttribute('stroke', `gray`);
+        this.element.appendChild(rect);
+
+        
         let n = this.num.toString();
         let t = svg.text(n, res.dimens.note_font_size);
         this.element.appendChild(t);
     }
-    public settle(bar_dimens: Dimens, position: number): Dimens {
+    public settle(pdimens: Dimens, x: number, w: number): Dimens {
+        this.dimens.width = w;
+        this.dimens.margin_left = 0;
+        this.dimens.margin_right = 0;
+        this.dimens.height = 40;
+        this.dimens.margin_top = 0;
+        this.dimens.margin_bottom = 0;
+        this.dimens.x = x;
+        this.dimens.y = 0;
+        this.attach();
 
         return this.dimens;
     }

@@ -1,3 +1,4 @@
+import * as svg from './svg.js';
 import { Note } from "./note.js";
 import { Dimens } from "./interface.js";
 import { element } from './element.js';
@@ -9,14 +10,35 @@ export class Bar extends element {
         super(json, 'g', 'muse-bar');
     }
     protected draw() {
+        const rect = svg.rect(this.dimens.width + this.dimens.margin_left + this.dimens.margin_right,
+            this.dimens.height + this.dimens.margin_top + this.dimens.margin_bottom, 'white');
+        rect.setAttribute('transform', `translate(${-this.dimens.margin_left},${-this.dimens.margin_top})`);
+        rect.setAttribute('stroke-width', `1px`);
+        rect.setAttribute('stroke', `gray`);
+        this.element.appendChild(rect);
+
         this.notes.forEach((ele) => {
             this.element.appendChild(ele.svg());
         });
     }
-    public settle(pdimens: Dimens, position: number): Dimens {
-        this.notes.forEach((elm, idx) => {
-            elm.settle(this.dimens, idx);
+    public settle(pdimens: Dimens, x: number, width: number): Dimens {
+        this.dimens.width = width;
+        this.dimens.margin_left = 0;
+        this.dimens.margin_right = 0;
+        this.dimens.height = 0;
+        this.dimens.margin_top = 0;
+        this.dimens.margin_bottom = 0;
+        this.dimens.x = x;
+        this.dimens.y = 0;
+        const w = this.dimens.width / this.notes.length;
+        let nx = 0;
+        this.notes.forEach((elm) => {
+            const r = elm.settle(this.dimens, nx, w);
+            nx = r.x + w;
+            let h = r.height + r.margin_top + r.margin_bottom;
+            this.dimens.height = (h > this.dimens.height ? h : this.dimens.height);
         });
+        this.attach();
         return this.dimens;
     }
     public toObject(): Object {

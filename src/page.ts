@@ -13,7 +13,7 @@ export class Page extends element {
     protected draw() {
         const rect = svg.rect(this.dimens.width + this.dimens.margin_left + this.dimens.margin_right,
             this.dimens.height + this.dimens.margin_top + this.dimens.margin_bottom, 'white');
-        rect.setAttribute('transform', `translate(${this.dimens.x - this.dimens.margin_left},${this.dimens.y - this.dimens.margin_top})`);
+        rect.setAttribute('transform', `translate(${-this.dimens.margin_left},${-this.dimens.margin_top})`);
         rect.setAttribute('stroke-width', `1px`);
         rect.setAttribute('stroke', `gray`);
         this.element.appendChild(rect);
@@ -30,8 +30,10 @@ export class Page extends element {
         this.dimens.margin_bottom = res.dimens.page_margin_vertical;
         this.dimens.height = pdimens.height - res.dimens.page_margin_vertical * 2;
         this.attach();
-        this.lines.forEach((elm, idx) => {
-            elm.settle(this.dimens, idx);
+        let y = 0;
+        this.lines.forEach((elm) => {
+            const r = elm.settle(this.dimens, y);
+            y += r.height + r.margin_top + r.margin_bottom;
         });
         return this.dimens;
     }
