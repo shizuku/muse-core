@@ -27,4 +27,7 @@ export abstract class element {
     public parse(json: string) {
         this.fromObject(JSON.parse(json));
     }
+    public getDimens(): Dimens {
+        return this.dimens;
+    }
 }

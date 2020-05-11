@@ -23,6 +23,7 @@ export class Notation extends element {
             elm.settle(this.dimens, idx);
         });
         this.attach();
+        this.draw();
         return this.dimens;
     }
     public toObject(): Object {

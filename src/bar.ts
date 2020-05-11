@@ -10,11 +10,12 @@ export class Bar extends element {
         super(json, 'g', 'muse-bar');
     }
     protected draw() {
+        this.element.innerHTML = "";
         const rect = svg.rect(this.dimens.width + this.dimens.margin_left + this.dimens.margin_right,
             this.dimens.height + this.dimens.margin_top + this.dimens.margin_bottom, 'white');
         rect.setAttribute('transform', `translate(${-this.dimens.margin_left},${-this.dimens.margin_top})`);
-        rect.setAttribute('stroke-width', `1px`);
-        rect.setAttribute('stroke', `gray`);
+        rect.setAttribute('stroke-width', `0.5px`);
+        rect.setAttribute('stroke', `white`);
         this.element.appendChild(rect);
 
         this.notes.forEach((ele) => {
@@ -25,7 +26,7 @@ export class Bar extends element {
         this.dimens.width = width;
         this.dimens.margin_left = 0;
         this.dimens.margin_right = 0;
-        this.dimens.height = 0;
+        this.dimens.height = pdimens.height;
         this.dimens.margin_top = 0;
         this.dimens.margin_bottom = 0;
         this.dimens.x = x;
@@ -35,10 +36,9 @@ export class Bar extends element {
         this.notes.forEach((elm) => {
             const r = elm.settle(this.dimens, nx, w);
             nx = r.x + w;
-            let h = r.height + r.margin_top + r.margin_bottom;
-            this.dimens.height = (h > this.dimens.height ? h : this.dimens.height);
         });
         this.attach();
+        this.draw();
         return this.dimens;
     }
     public toObject(): Object {

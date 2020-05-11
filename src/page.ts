@@ -11,13 +11,14 @@ export class Page extends element {
         super(json, 'g', 'muse-page');
     }
     protected draw() {
+        this.element.innerHTML = "";
         const rect = svg.rect(this.dimens.width + this.dimens.margin_left + this.dimens.margin_right,
             this.dimens.height + this.dimens.margin_top + this.dimens.margin_bottom, 'white');
         rect.setAttribute('transform', `translate(${-this.dimens.margin_left},${-this.dimens.margin_top})`);
         rect.setAttribute('stroke-width', `1px`);
         rect.setAttribute('stroke', `gray`);
         this.element.appendChild(rect);
-        
+
         this.lines.forEach((ele) => {
             this.element.appendChild(ele.svg());
         });
@@ -29,12 +30,13 @@ export class Page extends element {
         this.dimens.margin_top = res.dimens.page_margin_vertical;
         this.dimens.margin_bottom = res.dimens.page_margin_vertical;
         this.dimens.height = pdimens.height - res.dimens.page_margin_vertical * 2;
-        this.attach();
         let y = 0;
         this.lines.forEach((elm) => {
             const r = elm.settle(this.dimens, y);
-            y += r.height + r.margin_top + r.margin_bottom;
+            y += r.height + r.margin_top + r.margin_bottom + res.dimens.line_gap;
         });
+        this.attach();
+        this.draw();
         return this.dimens;
     }
     public toObject(): Object {
