@@ -54,7 +54,7 @@ export class Track extends element {
         const r = { bars: <any>[], dimens: {} };
         this.bars.forEach((elm) => {
             r.bars.push(elm.toObject());
-        })
+        });
         r.dimens = this.dimens;
         return r;
     }

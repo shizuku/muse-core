@@ -50,7 +50,7 @@ export class Line extends element {
         const r = { tracks: <any>[], dimens: {} };
         this.tracks.forEach((elm) => {
             r.tracks.push(elm.toObject());
-        })
+        });
         r.dimens = this.dimens;
         return r;
     }

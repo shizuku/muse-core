@@ -45,7 +45,7 @@ export class Page extends element {
         const r = { lines: <any>[], dimens: {} };
         this.lines.forEach((elm) => {
             r.lines.push(elm.toObject());
-        })
+        });
         r.dimens = this.dimens;
         return r;
     }
@@ -55,6 +55,5 @@ export class Page extends element {
         o.lines.forEach((ele: any) => {
             this.lines.push(new Line(JSON.stringify(ele)));
         });
-
     }
 };

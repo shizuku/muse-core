@@ -45,7 +45,7 @@ export class Bar extends element {
         const r = { notes: <any>[], dimens: {} };
         this.notes.forEach((elm) => {
             r.notes.push(elm.toObject());
-        })
+        });
         r.dimens = this.dimens;
         return r;
     }
