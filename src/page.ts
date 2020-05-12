@@ -23,17 +23,19 @@ export class Page extends element {
             this.element.appendChild(ele.svg());
         });
     }
-    public settle(pdimens: Dimens, position: number): Dimens {
+    public settle(y: number): Dimens {
         this.dimens.margin_left = res.dimens.page_margin_horizontal;
         this.dimens.margin_right = res.dimens.page_margin_horizontal;
-        this.dimens.width = pdimens.width - res.dimens.page_margin_horizontal * 2;
+        this.dimens.width = res.dimens.page_width;
         this.dimens.margin_top = res.dimens.page_margin_vertical;
         this.dimens.margin_bottom = res.dimens.page_margin_vertical;
-        this.dimens.height = pdimens.height - res.dimens.page_margin_vertical * 2;
-        let y = 0;
+        this.dimens.height = res.dimens.page_height;
+        this.dimens.x = 0;
+        this.dimens.y = y;
+        let ny = 0;
         this.lines.forEach((elm) => {
-            const r = elm.settle(this.dimens, y);
-            y += r.height + r.margin_top + r.margin_bottom + res.dimens.line_gap;
+            const r = elm.settle(this.dimens, ny);
+            ny += r.height + r.margin_top + r.margin_bottom + res.dimens.line_gap;
         });
         this.attach();
         this.draw();

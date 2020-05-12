@@ -1180,6 +1180,18 @@
                 "margin_bottom": 80
             },
             "element": {}
+        },{
+            "lines":[],
+            "dimens": {
+                "x": 0,
+                "y": 0,
+                "width": 960,
+                "height": 1760,
+                "margin_left": 60,
+                "margin_right": 60,
+                "margin_top": 80,
+                "margin_bottom": 80
+            }
         }],
         "dimens": {
             "x": 0,

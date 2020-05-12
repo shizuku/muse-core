@@ -16,12 +16,23 @@ export class Notation extends element {
             this.element.appendChild(ele.svg());
         });
     }
-    public settle(pdimens: Dimens, position: number): Dimens {
-        this.dimens.width = pdimens.width;
-        this.dimens.height = pdimens.height;
-        this.pages.forEach((elm, idx) => {
-            elm.settle(this.dimens, idx);
+    public settle(): Dimens {
+        this.dimens.margin_left = 0;
+        this.dimens.margin_right = 0;
+        this.dimens.width = 0
+        this.dimens.margin_top = 0;
+        this.dimens.margin_bottom = 0;
+        this.dimens.height = 0;
+        this.dimens.x = 0;
+        this.dimens.y = 0;
+        let y = 0;
+        this.pages.forEach((elm) => {
+            const r = elm.settle(y);
+            this.dimens.width = r.width + r.margin_left + r.margin_right;
+            this.dimens.height += r.height + r.margin_top + r.margin_bottom + res.dimens.page_gap;
+            y = this.dimens.height;
         });
+        this.dimens.height -= res.dimens.page_gap;
         this.attach();
         this.draw();
         return this.dimens;

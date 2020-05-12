@@ -12,8 +12,9 @@ export class Muse extends element {
         super(json, 'svg', 'muse');
     }
     protected draw() {
+        this.element.innerHTML = "";
         this.element.appendChild(this.notation.svg());
-        
+
         const t = svg.text(this.title, this.title_font_size);
         t.setAttribute('text-anchor', 'middle');
         const w = this.dimens.width + this.dimens.margin_left + this.dimens.margin_right;
@@ -22,7 +23,19 @@ export class Muse extends element {
         this.element.appendChild(t);
     }
     public setttle() {
-        this.notation.settle(this.dimens, 0);
+        this.dimens.margin_left = 0;
+        this.dimens.margin_right = 0;
+        this.dimens.width = 0
+        this.dimens.margin_top = 0;
+        this.dimens.margin_bottom = 0;
+        this.dimens.height = 0;
+        this.dimens.x = 0;
+        this.dimens.y = 0;
+        const r = this.notation.settle();
+        this.dimens.width = r.width;
+        this.dimens.height = r.height;
+        this.attach();
+        this.draw();
     }
     public toObject(): Object {
         return {
