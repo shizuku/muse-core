@@ -3,8 +3,10 @@ export const figures = {
 };
 
 export const dimens = {
-    "page_margin_horizontal": 60,
-    "page_margin_vertical": 80,
+    "page_height_of_width": 1.414,
+    "page_margin_horizontal": 110,
+    "page_margin_vertical": 120,
+    "page_gap": 10,
 
     "note_font_size": 24,
 
